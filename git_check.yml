@@ -1,26 +1,9 @@
 ---
-
-- name: Main | Checkout customer git repository
-  delegate_to: "{{ 'localhost' if not integration_test else omit }}"
-  become: false
-  run_once: true
-  ansible.builtin.git:
-    repo: https://github.com/glejnhithi/DevSecOps.git
-    dest: /home/rundeck/repos
-    version: main
-    accept_hostkey: true
-    force: true
-
-#- name: Main | Sync local git repo to remote directory
-#  delegate_to: "{{ inventory_hostname if integration_test else omit }}"
-#  ansible.posix.synchronize:
-#    src: "{{ reg_ansible_temp.path }}/"
-#    dest: "{{ reg_ansible_remote_temp.path }}"
-#    archive: true
-
-#- name: Main | Correcting rights on remote for remote tmp dir
-#  ansible.builtin.file:
-#    dest: "{{ reg_ansible_remote_temp.path }}"
-#    owner: "{{ default_fs5_user }}"
-#    group: "{{ default_fs5_group }}"
-#    recurse: true
+ - hosts: localhost
+   tasks:
+   - name: Clone a github repository
+     git:
+       repo: https://github.com/glejnhithi/DevSecOps.git
+       dest: /home/rundeck/repos/
+       clone: yes
+       update: yes
